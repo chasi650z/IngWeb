@@ -1,8 +1,6 @@
 const userCrtl = {}
 const User = require ('../models/User')
 
-
-
 userCrtl.getUsers = async (req, res) => {
     const users = await User.find()
     res.json(users)
