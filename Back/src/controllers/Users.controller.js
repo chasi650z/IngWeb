@@ -1,12 +1,13 @@
-
-
-
 const userCrtl = {}
+const User = require ('../models/User')
 
-userCrtl.getUsers = (req, res) => {
-    res.send('get USERSSSSSS prueba')
+
+
+userCrtl.getUsers = async (req, res) => {
+    const users = await User.find()
+    res.json(users)
 }
-userCrtl.AddUsers = (req, res) => {
+userCrtl.AddUser = (req, res) => {
     res.send('add USER prueba')
 }
 
