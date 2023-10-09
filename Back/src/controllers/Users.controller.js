@@ -6,6 +6,7 @@ userCrtl.getUsers = async (req, res) => {
     res.json(users)
 }
 userCrtl.AddUser = (req, res) => {
+
     res.send('add USER prueba')
 }
 
