@@ -26,8 +26,8 @@ userCrtl.DeleteUsers = async (req, res) => {
 userCrtl.getUser = async (req, res) => {
 
     const user = await User.findById(req.params.id)
-    console.log(user)
     res.send(user)
+    
 }
 
 userCrtl.UpdateUser = async (req, res) => {
