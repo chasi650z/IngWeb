@@ -1,23 +1,38 @@
 const userCrtl = {}
+
 const User = require ('../models/User')
 
 userCrtl.getUsers = async (req, res) => {
+
     const users = await User.find()
     res.json(users)
-}
-userCrtl.AddUser = (req, res) => {
 
-    res.send('add USER prueba')
 }
 
-userCrtl.DeleteUsers = (req, res) => {
-    res.send('delete USER prueba')
+userCrtl.AddUser = async (req, res) => {
+    const newUser = new User(req.body)
+    console.log(req.body);
+    await newUser.save()
+    res.send({ message: 'New User Created' });
 }
-userCrtl.getUser = (req, res) => {
-    res.send('get USER prueba')
+
+userCrtl.DeleteUsers = async (req, res) => {
+
+    const user = await User.findByIdAndDelete(req.params.id)
+    res.send({message: 'User deleted'})
+
 }
-userCrtl.UpdateUser = (req, res) => {
-    res.send('get USER prueba')
+
+userCrtl.getUser = async (req, res) => {
+
+    const user = await User.findById(req.params.id)
+    console.log(user)
+    res.send(user)
+}
+
+userCrtl.UpdateUser = async (req, res) => {
+    const user = await User.findByIdAndUpdate(req.params.id , req.body)
+    res.send({message: 'User Updated'})
 }
 
 module.exports = userCrtl;
