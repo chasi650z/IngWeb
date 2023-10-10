@@ -1,9 +1,9 @@
 
-GET http://localhost:4200/Users
+GET http://localhost:4000/Users
 
 ####
 
-POST http://localhost:4200/AddUser
+POST http://localhost:4000/AddUser
 Content-Type: application/json
 
 {
@@ -17,13 +17,13 @@ Content-Type: application/json
 
 ###
 // colocar el id para que regrese
-GET http://localhost:4200/UserProfile/65238d7ed5dafcc0f4dc1584
+GET http://localhost:4000/UserProfile/65238d7ed5dafcc0f4dc1584
 
 ###
-DELETE http://localhost:4200/UserProfile/65238e2c399e3c8187fc01c7
+DELETE http://localhost:4000/UserProfile/65238e2c399e3c8187fc01c7
 
 ###
-PUT http://localhost:4200/UserProfile/65238d7ed5dafcc0f4dc1584
+PUT http://localhost:4000/UserProfile/65238d7ed5dafcc0f4dc1584
 Content-Type: application/json 
 
 {
