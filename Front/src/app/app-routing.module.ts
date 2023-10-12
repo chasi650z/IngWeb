@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserComponent } from './components/user/user.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
     path: 'Login', component: LoginComponent
   },
   {
-    path: 'Admin', component: UserComponent
+    path: 'Admin', component: UserComponent, canActivate:[AuthGuard]
   }
 ];
 

@@ -7,11 +7,11 @@ POST http://localhost:4000/AddUser
 Content-Type: application/json
 
 {
-    "name": "Pablo",
-    "role": "Admin",
+    "name": "Gabo",
+    "role": "User",
     "lastname": "Chasipanta",
     "country": "Rusia",
-    "email": "chasi64.z@gmail.com",
+    "email": "gabo.chasipanta@gmail.com",
     "password": "123456"
 }
 
@@ -20,7 +20,7 @@ Content-Type: application/json
 GET http://localhost:4000/UserProfile/6526f397e83abf69216cd349
 
 ###
-DELETE http://localhost:4000/UserProfile/6526f397e83abf69216cd349
+DELETE http://localhost:4000/UserProfile/65282f7bd0a5462192377997
 
 ###
 PUT http://localhost:4000/UserProfile/6526f397e83abf69216cd349
@@ -29,5 +29,7 @@ Content-Type: application/json
 {
     "lastname": "Chasipanta"
 }
+### 
 
+GET http://localhost:4000/SearchUserProfile/chasi64.z@gmail.com/123456
 

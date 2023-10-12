@@ -35,4 +35,20 @@ userCrtl.UpdateUser = async (req, res) => {
     res.send({message: 'User Updated'})
 }
 
+userCrtl.findUserByCredentials = async (req, res) => {
+    const password = req.params.password;
+    const email = req.params.email;
+    try {
+      const user = await User.findOne({ email, password });
+      if (user) {
+        res.json(user); 
+      } else {
+        res.json(false);
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error en el servidor' }); // Error del servidor
+    }
+  };
+  
+  
 module.exports = userCrtl;

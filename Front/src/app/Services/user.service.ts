@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { user } from '../Model/user';
 
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +31,7 @@ export class UserService {
   }
 
   createUser(user: user){
+    console.log("entrada 3");
     return this.http.post(this.URL_API_Adduser, user)
   }
 
@@ -39,6 +43,11 @@ export class UserService {
   deleteUser(_id: string){
       const deleteUrl = `${this.URL_API}/UserProfile/${_id}`;
       return this.http.delete(deleteUrl);
+  }
+
+  searchUser(email: string, password: string) {
+    const searchUser = `${this.URL_API}/SearchUserProfile/${email}/${password}`;
+    return this.http.get(searchUser);
   }
 
 } 
