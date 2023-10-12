@@ -7,23 +7,23 @@ POST http://localhost:4000/AddUser
 Content-Type: application/json
 
 {
-    "name": "Alejandro",
-    "role": "User",
-    "lastname": "Silva",
-    "country": "Ecuador",
-    "email": "pablo.chasipanta@gmail.com",
-    "password": "654321"
+    "name": "Pablo",
+    "role": "Admin",
+    "lastname": "Chasipanta",
+    "country": "Rusia",
+    "email": "chasi64.z@gmail.com",
+    "password": "123456"
 }
 
 ###
 // colocar el id para que regrese
-GET http://localhost:4000/UserProfile/65238d7ed5dafcc0f4dc1584
+GET http://localhost:4000/UserProfile/6526f397e83abf69216cd349
 
 ###
-DELETE http://localhost:4000/UserProfile/65238e2c399e3c8187fc01c7
+DELETE http://localhost:4000/UserProfile/6526f397e83abf69216cd349
 
 ###
-PUT http://localhost:4000/UserProfile/65238d7ed5dafcc0f4dc1584
+PUT http://localhost:4000/UserProfile/6526f397e83abf69216cd349
 Content-Type: application/json 
 
 {
