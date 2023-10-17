@@ -1,2 +1,32 @@
-<router-outlet></router-outlet>
+<body>
+    <header *ngIf="!isLoginPage()">
+    <div class="interior">
+        <nav class="navegacion">
+            <a href="/Home" class="Logo"> <img src="https://static.wixstatic.com/media/e66e46_e148c4dd72dd4627a05b9890d47e0869~mv2.png/v1/crop/x_11,y_0,w_2332,h_552/fill/w_275,h_65,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logovialynk_color.png"> </a>
+        <ul>
+          <li><a href="/Home">Inicio</a></li>
+          <li><a href="/Home/Contacto">Sobre nosotros</a></li>
+          <li class="Submenu">
+            <a href="/Home/Portafolio">Portafolio</a>
+            <ul class="hijos">
+                <li><a href="#"></a>Kaspersky</li>
+                <li><a href="#"></a>Veracode</li>
+                <li><a href="#"></a>Delinea</li>
+                <li><a href="#"></a>BlackBerry/Cylance</li>
+                <li><a href="#"></a>Fraudwatch</li>
+                <li><a href="#"></a>Humanshield</li>
+                <li><a href="#"></a>Cymulate</li>
+            </ul>
+        </li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Partner</a></li>
+          <li><a routerLink="/Login">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+    </header>
+    <router-outlet></router-outlet>
+    </body>
+
+
 
