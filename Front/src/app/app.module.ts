@@ -9,6 +9,8 @@ import {LoginComponent} from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ContactoComponent } from './components/home/contacto/contacto.component';
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
+import { UserchannelComponent } from './components/user/userchannel/userchannel.component';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { PortafolioComponent} from './components/home/portafolio/portafolio.comp
     LoginComponent,
     HomeComponent,
     ContactoComponent,
-    PortafolioComponent
+    PortafolioComponent,
+    UserchannelComponent
   ],
   imports: [
     BrowserModule,
