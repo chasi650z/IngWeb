@@ -1,5 +1,13 @@
 const {Schema , model} = require ('mongoose')
 
+const StatusEnum = {
+  Registrado: 'Registrado',
+  Fase1: 'Fase 1',
+  Fase2: 'Fase 2',
+  Cierre: 'Cierre',
+  Fallido: 'Fallido'
+};
+
 const oportunidadSchema = new Schema ({
 
     /*  End User Company  Information */ 
@@ -21,11 +29,13 @@ const oportunidadSchema = new Schema ({
     currency: {type: String, required: true},
     CompetitorbeingEvaluated: {type: String, required: true},
     projectDescripcion: {type: String, required: true},
-    numberUsers: {type: String, required: true}, 
+    numberLicense: {type: String, required: true}, 
+    products: {type: String, required: true},
+    status: {
+      type: String,
+      enum: Object.values(StatusEnum),
+      default: StatusEnum.Registrado},
 
-    /* Opcional o dependiendo */
-    whichProducts: {type: String, required: true},
-    usesCases: {type: String, required: true},
 
     Evidence: [{
     nombre: {
@@ -39,6 +49,10 @@ const oportunidadSchema = new Schema ({
     feedback: {
       type: String,
       required: true
+    },
+    fechaCreacion: {
+      type: Date,
+      default: Date.now
     }
   }]
 
