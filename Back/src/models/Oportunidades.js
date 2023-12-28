@@ -10,6 +10,8 @@ const StatusEnum = {
 
 const oportunidadSchema = new Schema ({
 
+    IDEmpleado:{type: String, required: true},
+
     /*  End User Company  Information */ 
     companyName: {type: String, required: true},
     country: {type: String, required: true},
@@ -25,37 +27,50 @@ const oportunidadSchema = new Schema ({
     phone: {type: String, required: true},
     
     /* Opportunity Information  */ 
-    expectedCoseDate: {type: String, required: true},
+    expectedCoseDate: {type: Date, required: true},
+    CreationDate: {type: Date,
+                    default: Date.now,
+                    required: true},
     currency: {type: String, required: true},
-    CompetitorbeingEvaluated: {type: String, required: true},
     projectDescripcion: {type: String, required: true},
-    numberLicense: {type: String, required: true}, 
+    numberLicense: {type: Number, required: true}, 
     products: {type: String, required: true},
+    price: {type: Number , required: true},
+    Descuento: {type: Number ,required: true},
+    TotalProfit: {type: Number , default: 0, required: true},
+    
     status: {
       type: String,
       enum: Object.values(StatusEnum),
-      default: StatusEnum.Registrado},
+      default: StatusEnum.Registrado,
+      required: true},
 
-
-    Evidence: [{
-    nombre: {
-      type: String,
-      required: true
-    },
-    descripcion: {
-      type: String,
-      required: true
-    },
-    feedback: {
-      type: String,
-      required: true
-    },
-    fechaCreacion: {
-      type: Date,
-      default: Date.now
-    }
-  }]
-
+      Evidence: [{
+        nombre: {
+          type: String,
+          required: true
+        },
+        descripcion: {
+          type: String,
+          required: true
+        },
+        feedback: {
+          type: String,
+          default: "",
+          required: true
+        },
+        fechaCreacion: {
+          type: Date,
+          default: Date.now
+        },
+        note: { type: Number, 
+                min: 0,
+                max: 5,
+                default: 0,
+                required: true },
+        isRequire: { type: Boolean, required: false }
+      }]
+      
 }, {
     timestamps: true,
     versionKey: false

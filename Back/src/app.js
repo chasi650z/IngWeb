@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
 app.use(require('./routes/Users.routes'))
+app.use(require('./routes/Oportunidades.routes'))
+app.use(require('./routes/Company.routes'))
 
 module.exports = app;
 

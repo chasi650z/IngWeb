@@ -7,9 +7,12 @@ const userSchema = new Schema ({
     country: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
+    companyName: {type: String, required: true},
+    points: {type: Number, required: false},
 }, {
     timestamps: true,
     versionKey: false
 })
+
 
 module.exports = model('User', userSchema);
