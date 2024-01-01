@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h1>Formulario Básico</h1>
+            <form #OportForm = "ngForm" (ngSubmit)="addOport(OportForm, usuarioActual?._id || '')">
+
+              <input type="hidden" name="role" [(ngModel)]="OportunidadesService.selectedOportunidad.IDEmpleado">
+              <input type="hidden" name="_id" [(ngModel)]="OportunidadesService.selectedOportunidad._id">
+
+              <div class="form-group mt-2" >
+                <input name="CompanyName" type="text"  class="form-style" placeholder="Company Name" [(ngModel)]="OportunidadesService.selectedOportunidad.companyName">
+              </div>	
+
+              <div class="form-group mt-2">
+                <input name="country"  type="tel" class="form-style" placeholder="Country" [(ngModel)]="OportunidadesService.selectedOportunidad.country" >
+              </div>	
+
+              <div class="form-group mt-2">
+                <input name="address"  type="email"  class="form-style" placeholder="Address" [(ngModel)]="OportunidadesService.selectedOportunidad.address"> 
+
+              </div>
+
+              <div class="form-group mt-2">
+                <input name="city" type="text"  class="form-style" placeholder="City" [(ngModel)]="OportunidadesService.selectedOportunidad.city">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="state"  type="text"  class="form-style" placeholder="State" [(ngModel)]="OportunidadesService.selectedOportunidad.state">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="postalCode"  type="text"  class="form-style" placeholder="Postal Code" [(ngModel)]="OportunidadesService.selectedOportunidad.postalCode">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="clientName"  type="text"  class="form-style" placeholder="Client Name" [(ngModel)]="OportunidadesService.selectedOportunidad.clientName">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="clientLastName"  type="text"  class="form-style" placeholder="Client Lastname" [(ngModel)]="OportunidadesService.selectedOportunidad.clientLastName">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="title"  type="text"  class="form-style" placeholder="Title" [(ngModel)]="OportunidadesService.selectedOportunidad.title">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="phone"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.phone">
+              </div>
+
+
+
+
+              <button class="btn mt-4"  >
+                Save
+              </button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>CompanyName</th>
+              <th>Client Name</th>
+              <th>Client Lastname</th>
+              <th>Creation Date</th>
+              <th>Expected Cose Date</th>
+              <th>Total Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let oports of OportunidadesService.oportunidades">
+              <td>{{oports.companyName}}</td>
+              <td>{{oports.clientName}}</td>
+              <td>{{oports.clientLastName}}</td>
+              <td>{{oports.CreationDate}}</td>
+              <td>{{oports.expectedCoseDate}}</td>
+              <td>{{oports.TotalProfit}}</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" (click)="edit(oports)"> 
+                  <i class="material-icons"> edit </i>
+                   </button>
+                <button class="btn btn-danger btn-sm" (click)="oports._id && deleteUser(oports._id)" >
+                  <i class="material-icons"> delete </i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="usuarioActual">
+          <h2>User Information</h2>
+          <p>Name: {{ usuarioActual.name }}</p>
+          <p>Lastname: {{ usuarioActual.lastname }}</p>
+          <p>Email: {{ usuarioActual.email }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

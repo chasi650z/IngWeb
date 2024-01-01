@@ -14,10 +14,11 @@ export class LoginComponent implements OnInit {
   email: string = ''; 
   password: string = '';
 
+
   constructor(private router: Router, public userservice: UserService, private authService: AuthService){}
 
   ngOnInit(): void {
-
+    
   }
 
   addUser(){
@@ -33,11 +34,28 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         if (response) {
           console.log('Usuario registrado:', response);
+
+          const usuarioEncontrado: user = {
+            _id: response._id,
+            name: response.name,
+            role: response.role,
+            lastname: response.lastname,
+            country: response.country,
+            email: response.email,
+            password: response.password,
+            companyName: response.companyName,
+            points: response.points,
+          };
+
+          this.userservice.actualizarusuarioactual(usuarioEncontrado);
+
           if (response.role === 'Admin') {
             this.authService.logueado = true;
             console.log('Usuario con rol de administrador');
             this.router.navigateByUrl('/Admin');
-          } 
+          } else {
+            this.router.navigateByUrl('/User');
+          }
         } else {
           console.log('Usuario no registrado');
         }

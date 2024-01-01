@@ -10,10 +10,13 @@ import { user } from 'src/app/Model/user';
 })
 export class UserComponent implements OnInit {
 
+  usuarioActual: user | null = null;
+
   constructor(public userservice: UserService){}
 
   ngOnInit(): void {
     this.getUsers();
+    this.usuarioActual = this.userservice.obtenerUsuarioActual();
   }
 
   getUsers(){

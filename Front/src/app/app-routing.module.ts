@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { UserComponent } from './components/user/user.component';
 import { ContactoComponent } from './components/home/contacto/contacto.component';
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
+import { UsercompanyComponent } from './components/usercompany/usercompany.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'Home/Contacto', component:ContactoComponent
+  },
+  {
+    path: 'User', component:UsercompanyComponent
   }
 ];
 

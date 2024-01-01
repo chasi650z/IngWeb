@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { BehaviorSubject, Observable } from 'rxjs';
 import { user } from '../Model/user';
-
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +20,11 @@ export class UserService {
     name: '',
     password: '',
     role:'User' ,
+    companyName: '',
+    points: 0,
   };
-  
+  public usuarioActual: user | null = null;
+
   constructor(private http: HttpClient){}
 
   getUsers(){
@@ -48,6 +49,14 @@ export class UserService {
   searchUser(email: string, password: string) {
     const searchUser = `${this.URL_API}/SearchUserProfile/${email}/${password}`;
     return this.http.get(searchUser);
+  }
+
+  obtenerUsuarioActual(): user | null {
+    return this.usuarioActual;
+  }
+
+  actualizarusuarioactual(user: user) {
+    this.usuarioActual=user;
   }
 
 } 

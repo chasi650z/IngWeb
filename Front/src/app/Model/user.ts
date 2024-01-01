@@ -1,13 +1,17 @@
 export interface user{
 
-    country: string,
-    createdAt?: string,
-    email: string,
-    lastname: string,
     name: string,
-    password: string,
     role: string,
+    lastname: string,
+    country: string,
+    email: string,
+    password: string,
+    companyName: string,
+    points: Number,
+
+    createdAt?: string,
     updateAt?: string,
+
     _id?: string
 
 }

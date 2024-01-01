@@ -10,6 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ContactoComponent } from './components/home/contacto/contacto.component';
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
 import { UserchannelComponent } from './components/user/userchannel/userchannel.component';
+import { UsercompanyComponent } from './components/usercompany/usercompany.component';
 
 
 
@@ -21,7 +22,8 @@ import { UserchannelComponent } from './components/user/userchannel/userchannel.
     HomeComponent,
     ContactoComponent,
     PortafolioComponent,
-    UserchannelComponent
+    UserchannelComponent,
+    UsercompanyComponent
   ],
   imports: [
     BrowserModule,

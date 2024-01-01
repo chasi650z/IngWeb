@@ -11,7 +11,9 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   isLoginPage(): boolean {
-    return this.router.url.includes('/Login');
+    const url = this.router.url;
+    return url.includes('/Login') || url.includes('/Admin') || url.includes('/User');
   }
+  
 
 }
