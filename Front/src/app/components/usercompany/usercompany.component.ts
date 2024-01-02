@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OportunidadesService } from 'src/app/Services/oportunidades.service';
-import {UserService} from '../../Services/user.service';
+import {UserService} from 'src/app/Services/user.service';
 import { user } from 'src/app/Model/user';
 import { Oportunidad } from 'src/app/Model/oportunidad';
 import { NgForm } from '@angular/forms';
@@ -15,6 +15,9 @@ export class UsercompanyComponent {
   usuarioActual: user | null = null;
 
   constructor(public OportunidadesService : OportunidadesService, public userservice: UserService){}
+
+  oportunidadInfo: any;
+  mostrarInfo: boolean = false;
 
   ngOnInit(): void {
     this.usuarioActual = this.userservice.obtenerUsuarioActual();
@@ -63,7 +66,7 @@ export class UsercompanyComponent {
 
   deleteUser(id: string) {
     console.log("deleted");
-      if (confirm("Are you sure you want to delete this user?")) {
+      if (confirm("Are you sure you want to delete this Oportunity?")) {
         this.userservice.deleteUser(id).subscribe(
           res => {
             if (this.usuarioActual && this.usuarioActual._id) {
@@ -73,6 +76,25 @@ export class UsercompanyComponent {
           err => console.log(err)
         )
       }
+  }
+
+  toggleInfoVisibility() {
+    this.mostrarInfo = !this.mostrarInfo; // Cambiar el valor de la variable para alternar la visibilidad
+  }
+
+  Showall(id: string){
+    this.OportunidadesService.oneOp(id).subscribe(
+      (data) => {
+        this.oportunidadInfo = data;
+        this.mostrarInfo = true; // Mostrar la información al recibir los datos
+      },
+      (error) => {
+        console.error('Error al obtener la información de la oportunidad:', error);
+      }
+    );
+  }
+  AddEvidence(oport: any){
+    
   }
 
 }

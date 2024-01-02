@@ -14,6 +14,10 @@ export class UserComponent implements OnInit {
 
   constructor(public userservice: UserService){}
 
+  name = '';
+  lastname = '';
+  company='';
+
   ngOnInit(): void {
     this.getUsers();
     this.usuarioActual = this.userservice.obtenerUsuarioActual();
@@ -64,5 +68,23 @@ export class UserComponent implements OnInit {
   editUser(user: user){
     this.userservice.selectedUser = user;
   }
+
+  Search(name: string, lastname: string, company: string) {
+    this.userservice.Search2(name, lastname, company).subscribe(
+      (res) => {
+        // Convierte el resultado al tipo esperado (user[])
+        const usersResult = res as user[];
+        this.userservice.users = usersResult; // Actualizar la lista de usuarios con los resultados de la búsqueda
+      },
+      (error) => {
+        console.error('Error en la solicitud de búsqueda:', error);
+      }
+    );
+  }
+  
+  Cancel(){
+    this.getUsers();
+  }
+
 
 }

@@ -7,8 +7,6 @@ import { Oportunidad } from '../Model/oportunidad';
 })
 export class OportunidadesService {
   URL_API = 'http://localhost:4000';
-  URL_API_GetUsers  = 'http://localhost:4000/User';
-  URL_API_Adduser = 'http://localhost:4000/AddUser';
 
   oportunidades : Oportunidad[] = [];
 
@@ -57,7 +55,17 @@ export class OportunidadesService {
     return this.http.get<Oportunidad[]>(Oport);
   }
 
+  getOportsAdmin(){
+    const Oport = `${this.URL_API}/Admin/OportunityALL`
+    return this.http.get<Oportunidad[]>(Oport);
+  }
+
   deleteUser(id:string, _id: string,){
+    const deleteUrl = `${this.URL_API}/User/OportunityDelete/${_id}`;
+    return this.http.delete(deleteUrl);
+  }
+
+  deleteAdminOp(_id: string,){
     const deleteUrl = `${this.URL_API}/User/OportunityDelete/${_id}`;
     return this.http.delete(deleteUrl);
   }
@@ -66,5 +74,19 @@ export class OportunidadesService {
     const UpdateOport = `${this.URL_API}/User/Oportunity/`
     return (this.http.put(UpdateOport, user))
   }
+
+  oneOp(_id:string){
+    const UpdateOport = `${this.URL_API}/Admin/Oportunity/${_id}`
+    return (this.http.get(UpdateOport))
+  }
+
+  updateEvidenceCalification(evidenceId: string, calification: any) {
+    const url = `${this.URL_API}/Admin/Oportunity/Evidence/${evidenceId}/actualizar-calificacion`;
+    return this.http.put(url, calification);
+  }
+
+  
+
+
 
 }

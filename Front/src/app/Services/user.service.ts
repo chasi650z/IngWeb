@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { user } from '../Model/user';
 
@@ -23,7 +24,12 @@ export class UserService {
     companyName: '',
     points: 0,
   };
-  public usuarioActual: user | null = null;
+  private usuarioActualSubject: BehaviorSubject<user | null> = new BehaviorSubject<user | null>(null);
+
+  // Observable para que los componentes se suscriban a cambios en el usuario actual
+  usuarioActual$: Observable<user | null> = this.usuarioActualSubject.asObservable();
+
+  // ... otros métodos
 
   constructor(private http: HttpClient){}
 
@@ -47,16 +53,33 @@ export class UserService {
   }
 
   searchUser(email: string, password: string) {
-    const searchUser = `${this.URL_API}/SearchUserProfile/${email}/${password}`;
+    const searchUser = `${this.URL_API}/SearchUserProfileC/${email}/${password}`;
+    return this.http.get(searchUser);
+  }
+
+  searchUserName(email: string, password: string) {
+    const searchUser = `${this.URL_API}/SearchUserProfileN/${email}/${password}`;
     return this.http.get(searchUser);
   }
 
   obtenerUsuarioActual(): user | null {
-    return this.usuarioActual;
+    return this.usuarioActualSubject.value;
   }
 
   actualizarusuarioactual(user: user) {
-    this.usuarioActual=user;
+    this.usuarioActualSubject.next(user);
+  }
+
+  Search(name: string, lastname: string) {
+    const searchUser = `${this.URL_API}/SearchUserProfileN`;
+    const params = new HttpParams().set('name', name).set('lastname', lastname);
+    return this.http.get(searchUser, { params });
+  }
+
+  Search2(name: string, lastname: string, company:string) {
+    const searchUser = `${this.URL_API}/SearchUserProfileAdmin`;
+    const params = new HttpParams().set('name', name).set('lastname', lastname).set('company',company);
+    return this.http.get(searchUser, { params });
   }
 
 } 

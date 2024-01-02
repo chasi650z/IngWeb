@@ -7,6 +7,7 @@ import { UserComponent } from './components/user/user.component';
 import { ContactoComponent } from './components/home/contacto/contacto.component';
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
 import { UsercompanyComponent } from './components/usercompany/usercompany.component';
+import { OportunidadesComponent } from './components/user/oportunidades/oportunidades.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: 'User', component:UsercompanyComponent
+  },
+  {
+    path: 'Admin/Oportunidades', component:OportunidadesComponent
   }
 ];
 

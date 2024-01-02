@@ -46,12 +46,10 @@ export class LoginComponent implements OnInit {
             companyName: response.companyName,
             points: response.points,
           };
-
           this.userservice.actualizarusuarioactual(usuarioEncontrado);
-
+          console.log(this.userservice.obtenerUsuarioActual());
           if (response.role === 'Admin') {
             this.authService.logueado = true;
-            console.log('Usuario con rol de administrador');
             this.router.navigateByUrl('/Admin');
           } else {
             this.router.navigateByUrl('/User');

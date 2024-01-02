@@ -3,7 +3,7 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
-            <h1>Formulario Básico</h1>
+            <h1>Formulario Oportunidades</h1>
             <form #OportForm = "ngForm" (ngSubmit)="addOport(OportForm, usuarioActual?._id || '')">
 
               <input type="hidden" name="role" [(ngModel)]="OportunidadesService.selectedOportunidad.IDEmpleado">
@@ -88,6 +88,9 @@
                 <button class="btn btn-danger btn-sm" (click)="oports._id && deleteUser(oports._id)" >
                   <i class="material-icons"> delete </i>
                 </button>
+                <button class="btn btn-secondary btn-sm" (click)="oports._id && Showall(oports._id)" >
+                  <i class="material-icons"> search </i>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -97,6 +100,41 @@
           <p>Name: {{ usuarioActual.name }}</p>
           <p>Lastname: {{ usuarioActual.lastname }}</p>
           <p>Email: {{ usuarioActual.email }}</p>
+        </div>
+        <div *ngIf="mostrarInfo">
+          <h2> Company  Information </h2>
+          <p>Company Name: {{ oportunidadInfo.companyName }}</p>
+          <p>Country: {{ oportunidadInfo.country}}</p>
+          <p>Address: {{ oportunidadInfo.address}}</p>
+          <p>City: {{ oportunidadInfo.city}}</p>
+          <p>State: {{ oportunidadInfo.state}}</p>
+          <p>PostalCode: {{ oportunidadInfo.postalCode}}</p>
+          <h2> Contact Information </h2>
+          <p>Client Name: {{ oportunidadInfo.clientName}}</p>
+          <p>Client Lastname: {{ oportunidadInfo.clientLastName}}</p>
+          <p>Title: {{ oportunidadInfo.title}}</p>
+          <p>Phone: {{ oportunidadInfo.phone}}</p>
+          <h2> Oporunity Information </h2>
+          <p>Expected Cose Date: {{ oportunidadInfo.expectedCoseDate}}</p>
+          <p>Creation Oportunity Date: {{ oportunidadInfo.CreationDate }}</p>
+          <p>Currency: {{ oportunidadInfo.currency}}</p>
+          <p>Project Description : {{ oportunidadInfo.projectDescripcion}}</p>
+          <p>Number License: {{ oportunidadInfo.numberLicense}}</p>
+          <p>Price: {{ oportunidadInfo.price}}</p>
+          <p>Total Profit: {{ oportunidadInfo.TotalProfit}}</p>
+          <p>Status: {{ oportunidadInfo.status}}</p>
+          <h3> Evidence </h3> 
+          <button (click)="AddEvidence(oportunidadInfo)">Mostrar/Ocultar Información</button>
+          <div *ngFor="let oports of oportunidadInfo.Evidence">
+              <p>----------------------------------------------</p>
+              <p>Name: {{ oports.nombre}}</p>
+              <p>Description {{ oports.descripcion}}</p>
+              <p>Feedback: {{ oports.feedback}}</p>
+              <p>Note: {{ oports.note}}</p>
+              <p>Creation Date: {{ oports.fechaCreacion}}</p>
+              <p>----------------------------------------------</p>
+          </div>
+          <button (click)="toggleInfoVisibility()">Mostrar/Ocultar Información</button>
         </div>
       </div>
     </div>

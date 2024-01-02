@@ -1,0 +1,181 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h1>Formulario Oportunidades</h1>
+                <form #OportForm = "ngForm" (ngSubmit)="updateOports(OportForm)">
+    
+                  <input type="hidden" name="role" [(ngModel)]="OportunidadesService.selectedOportunidad.IDEmpleado">
+                  <input type="hidden" name="_id" [(ngModel)]="OportunidadesService.selectedOportunidad._id">
+                  <h2> Company Information </h2>
+                  <div class="form-group mt-2" >
+                    <input name="CompanyName" type="text"  class="form-style" placeholder="Company Name" [(ngModel)]="OportunidadesService.selectedOportunidad.companyName">
+                  </div>	
+    
+                  <div class="form-group mt-2">
+                    <input name="country"  type="tel" class="form-style" placeholder="Country" [(ngModel)]="OportunidadesService.selectedOportunidad.country" >
+                  </div>	
+    
+                  <div class="form-group mt-2">
+                    <input name="address"  type="email"  class="form-style" placeholder="Address" [(ngModel)]="OportunidadesService.selectedOportunidad.address"> 
+    
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input name="city" type="text"  class="form-style" placeholder="City" [(ngModel)]="OportunidadesService.selectedOportunidad.city">
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input  name="state"  type="text"  class="form-style" placeholder="State" [(ngModel)]="OportunidadesService.selectedOportunidad.state">
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input  name="postalCode"  type="text"  class="form-style" placeholder="Postal Code" [(ngModel)]="OportunidadesService.selectedOportunidad.postalCode">
+                  </div>
+
+                  <h2> Contact Information </h2>
+
+                  <div class="form-group mt-2">
+                    <input  name="clientName"  type="text"  class="form-style" placeholder="Client Name" [(ngModel)]="OportunidadesService.selectedOportunidad.clientName">
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input  name="clientLastName"  type="text"  class="form-style" placeholder="Client Lastname" [(ngModel)]="OportunidadesService.selectedOportunidad.clientLastName">
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input  name="title"  type="text"  class="form-style" placeholder="Title" [(ngModel)]="OportunidadesService.selectedOportunidad.title">
+                  </div>
+    
+                  <div class="form-group mt-2">
+                    <input  name="phone"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.phone">
+                  </div>
+
+                  <h2> Oportunity Information</h2>
+
+                  <div class="form-group mt-2">
+                    <input  name="expectedCoseDate"  type="date"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.expectedCoseDate">
+                  </div>
+
+                  <input type="hidden" name="CreationDate" [(ngModel)]="OportunidadesService.selectedOportunidad.CreationDate">
+
+                  <div class="form-group mt-2">
+                    <input  name="currency"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.currency">
+                  </div>
+
+                  <div class="form-group mt-2">
+                    <input  name="projectDescripcion"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.projectDescripcion">
+                  </div>
+
+                  <div class="form-group mt-2">
+                    <input  name="numberLicense"  type="number"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.numberLicense">
+                  </div>
+
+                  <div class="form-group mt-2">
+                    <input  name="products"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.products">
+                  </div>
+
+                  <div class="form-group mt-2">
+                    <input  name="price"  type="number"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.price">
+                  </div>
+
+                  <div class="form-group mt-2">
+                    <input  name="descuento"  type="number"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.Descuento">
+                  </div>
+
+                  <input type="hidden" name="TotalProfit" [(ngModel)]="OportunidadesService.selectedOportunidad.TotalProfit">
+
+                  <button class="btn mt-4"  >
+                    Save
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div *ngIf="mostrarEvidence">  
+                <div class="card">
+                    <div class="card-body">
+                        <h1>Calificar Oportunidad</h1>
+                        <div class="form-group mt-2">
+                            <input  name="note"  type="text"  class="form-style" placeholder="Note" [(ngModel)]="this.note">
+                          </div>
+                          <div class="form-group mt-2">
+                            <input  name="feedback"  type="text"  class="form-style" placeholder="Feedback" [(ngModel)]="this.feedback">
+                          </div>
+                          <button (click)="AddEvidenceCalificacion(note,feedback)"> Save </button>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>CompanyName</th>
+              <th>Client Name</th>
+              <th>Client Lastname</th>
+              <th>Creation Date</th>
+              <th>Expected Cose Date</th>
+              <th>Total Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let oports of OportunidadesService.oportunidades">
+              <td>{{oports.companyName}}</td>
+              <td>{{oports.clientName}}</td>
+              <td>{{oports.clientLastName}}</td>
+              <td>{{oports.CreationDate}}</td>
+              <td>{{oports.expectedCoseDate}}</td>
+              <td>{{oports.TotalProfit}}</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" (click)="edit(oports)"> 
+                  <i class="material-icons"> edit </i>
+                   </button>
+                <button class="btn btn-danger btn-sm" (click)="oports._id && deleteUser(oports._id)" >
+                  <i class="material-icons"> delete </i>
+                </button>
+                <button class="btn btn-secondary btn-sm" (click)="oports._id && Showall(oports._id)" >
+                    <i class="material-icons"> search </i>
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="mostrarInfo">
+            <h2> Company  Information </h2>
+            <p>Company Name: {{ oportunidadInfo.companyName }}</p>
+            <p>Country: {{ oportunidadInfo.country}}</p>
+            <p>Address: {{ oportunidadInfo.address}}</p>
+            <p>City: {{ oportunidadInfo.city}}</p>
+            <p>State: {{ oportunidadInfo.state}}</p>
+            <p>PostalCode: {{ oportunidadInfo.postalCode}}</p>
+            <h2> Contact Information </h2>
+            <p>Client Name: {{ oportunidadInfo.clientName}}</p>
+            <p>Client Lastname: {{ oportunidadInfo.clientLastName}}</p>
+            <p>Title: {{ oportunidadInfo.title}}</p>
+            <p>Phone: {{ oportunidadInfo.phone}}</p>
+            <h2> Oporunity Information </h2>
+            <p>Expected Cose Date: {{ oportunidadInfo.expectedCoseDate}}</p>
+            <p>Creation Oportunity Date: {{ oportunidadInfo.CreationDate }}</p>
+            <p>Currency: {{ oportunidadInfo.currency}}</p>
+            <p>Project Description : {{ oportunidadInfo.projectDescripcion}}</p>
+            <p>Number License: {{ oportunidadInfo.numberLicense}}</p>
+            <p>Price: {{ oportunidadInfo.price}}</p>
+            <p>Total Profit: {{ oportunidadInfo.TotalProfit}}</p>
+            <p>Status: {{ oportunidadInfo.status}}</p>
+            <h3> Evidence </h3>
+            <div *ngFor="let oports of oportunidadInfo.Evidence">
+                <p>----------------------------------------------</p>
+                <p>Name: {{ oports.nombre}}</p>
+                <p>Description {{ oports.descripcion}}</p>
+                <p>Feedback: {{ oports.feedback}}</p>
+                <p>Creation Date: {{ oports.fechaCreacion}}</p>
+                <p>Note: {{ oports.note}}</p>
+                <button (click)="SeeEvidence(oports)"> Calificar Evidencia </button>
+                <p>----------------------------------------------</p>
+            </div>
+            <button (click)="toggleInfoVisibility()">Mostrar/Ocultar Información</button>
+          </div>
+      </div>
+    </div>
+    </div>
