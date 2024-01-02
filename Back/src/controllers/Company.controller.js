@@ -7,7 +7,6 @@ const companyCrtl = {};
 companyCrtl.optenerUsers = async (req, res) => {
     try {
         const NameCP = req.params.company;
-        console.log("Hola", req.params.company);
         const users = await User.find({ companyName: NameCP }); 
         res.send(users);
     } catch (error) {
@@ -195,11 +194,88 @@ companyCrtl.obtenerNotasDeOportunidades = async (req, res) => {
     }
 };
 
+companyCrtl.Profits = async (req, res) => {
+    try {
+      // Obtener todas las oportunidades
+      const NameCP = req.params.company;
+      const users = await User.find({ companyName: NameCP });
+      const Employees = {};
+  
+      // Utiliza Promise.all para esperar todas las consultas asíncronas
+      const oports = await Promise.all(
+        users.map(async (user) => {
+          const iduser = user._id;
+          // Encuentra oportunidades para el ID de cada usuario
+          return await Oportunidad.find({ IDEmpleado: iduser });
+        })
+      );
+  
+      // Recorremos todas las oportunidades y sumamos directamente por empleado
+      oports.forEach((oportunidadesList, index) => {
+        const user = users[index];
+        const id = user._id;
+        const nombreEmpleado = `${user.name} ${user.lastname}`;
+        let Sum = 0;
+  
+        oportunidadesList.forEach((oportunidad) => {
+          Sum += oportunidad.TotalProfit;
+        });
+  
+        Employees[id] = {
+          nombreEmpleado,
+          Sum, // Suma del profit
+        };
+      });
+  
+      // Devolver el objeto de promedio de notas por empleado
+      res.json(Employees);
+    } catch (error) {
+      // Manejar errores, por ejemplo, imprimirlos en la consola
+      console.error('Error al obtener las ganancias:', error);
+      // Enviar una respuesta de error al cliente
+      res.status(500).json({ message: 'Error en el servidor' });
+    }
+  };
+  
 
-
-
-
-
-
-
+  companyCrtl.ProfitsDate = async (req, res) => {
+    try {
+      const NameCP = req.params.company;
+      const startDate = new Date(req.body.startDate);
+      const endDate = new Date(req.body.endDate);
+  
+      // Obtener todos los usuarios de la empresa
+      const users = await User.find({ companyName: NameCP });
+      const Employees = {};
+  
+      // Obtener todas las oportunidades para todos los usuarios en el rango de fechas
+      const oports = await Oportunidad.find({
+        IDEmpleado: { $in: users.map(user => user._id.toString()) }, // Convertir a String para la comparación
+        expectedCoseDate: { $gte: startDate, $lte: endDate }
+      });
+  
+      for (const user of users) {
+        const id = user._id.toString(); // Convertir a String para la comparación
+        const nombreEmpleado = `${user.name} ${user.lastname}`;
+        let Sum = 0;
+  
+        // Filtrar las oportunidades solo para el usuario actual
+        const userOports = oports.filter(oportunidad => oportunidad.IDEmpleado === id);
+  
+        // Sumar los TotalProfit de todas las oportunidades filtradas
+        Sum = userOports.reduce((total, oportunidad) => total + oportunidad.TotalProfit, 0);
+  
+        Employees[id] = {
+          nombreEmpleado,
+          Sum // Suma del profit
+        };
+      }
+  
+      res.json(Employees);
+    } catch (error) {
+      console.error('Error al obtener las ganancias:', error);
+      res.status(500).json({ message: 'Error en el servidor' });
+    }
+  };
+  
 module.exports = companyCrtl;

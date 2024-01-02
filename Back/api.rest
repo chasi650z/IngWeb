@@ -8,20 +8,20 @@ Content-Type: application/json
 
 {
 
-    "name": "Alejandro",
+    "name": "Pruebas2",
     "role": "User",
     "lastname": "Silva",
-    "country": "Japon",
-    "email": "Alejo@gmail.com",
+    "country": "Japon", 
+    "email": "User@gmail.com",
     "password": "12345",
-    "companyName": "XPC",
-    "points": 200  
+    "companyName": "VIALYNK",
+    "points": 200000 
 
 }
 
 ###
 // colocar el id para que regrese
-GET http://localhost:4000/UserProfile/658b17293cf836c457e9f6b8
+GET http://localhost:4000/UserProfile/658df31c5bf2fcebf60e175f
 
 ###
 DELETE http://localhost:4000/UserProfile/65282f7bd0a5462192377997
@@ -35,17 +35,22 @@ Content-Type: application/json
 }
 ### 
 
-GET http://localhost:4000/SearchUserProfile/chasi64.z@gmail.com/123456
-
-
-
-
-
-
+GET http://localhost:4000/SearchUserProfileC/chasi64.z@gmail.com/12345
 
 ###
 
-POST http://localhost:4000/User/658b173a3cf836c457e9f6ba/Oportunity
+GET http://localhost:4000/SearchUserProfileAdmin
+Content-Type: application/json 
+
+{
+    "name":"",
+    "lastname": "Silva"
+}
+
+###
+
+
+POST http://localhost:4000/User/658df31c5bf2fcebf60e175f/Oportunity
 Content-Type: application/json
 
 {
@@ -62,24 +67,30 @@ Content-Type: application/json
     "title": "TítuloCliente",
     "phone": "123-456-7890",
     "expectedCoseDate": "2023-01-01",
+
+    "CreationDate":"2023-11-12",
+
     "currency": "USD",
     "projectDescripcion": "Descripción del proyecto",
     "numberLicense": 543,
     "products": "Productos relacionados",
-    "status": "Registrado",
+    "price": 1000,
+    "Descuento": 15,
+    "Totalprofit": 0,
+    "status": "Cierre",
     "Evidence": [
         {
             "nombre": "Documento1",
             "descripcion": "Descripción del documento 1",
             "feedback": "Feedback del documento 1",
-            "note": 2,
+            "note": 4,
             "isRequire": true
         },
         {
             "nombre": "Documento2",
             "descripcion": "Descripción del documento 2",
             "feedback": "Feedback del documento 2",
-            "note": 3,
+            "note": 5,
             "isRequire": true
         }
     ]
@@ -87,14 +98,18 @@ Content-Type: application/json
 
 ###
 // obtener todas las oportunidades
-GET http://localhost:4000/User/6589d3b041b5706d9375688d/OportunityALL
+GET http://localhost:4000/Admin/OportunityALL
 
 ###
 
-GET http://localhost:4000/GMS/Users/
+GET http://localhost:4000/XPC/Users/
 
 ###
+// obtener una sola oportunidad 
+GET  http://localhost:4000/Admin/Oportunity/658df46deda25e3a8db12ad3
 
+
+###
 GET http://localhost:4000/GMS/OportunityALL
 
 ###
@@ -104,3 +119,16 @@ GET http://localhost:4000/GMS/PromOport
 ### 
 
 GET http://localhost:4000/GMS/NotesOport
+
+###
+GET  http://localhost:4000/GMS/Profits
+
+###
+
+GET  http://localhost:4000/GMS/ProfitsDate
+Content-Type: application/json
+
+{
+    "startDate":"2022-01-01",
+    "endDate":"2022-12-31"
+}

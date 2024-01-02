@@ -29,7 +29,7 @@ const oportunidadSchema = new Schema ({
     /* Opportunity Information  */ 
     expectedCoseDate: {type: Date, required: true},
     CreationDate: {type: Date,
-                    default: Date.now,
+                    default: () => startOfDay(new Date()),
                     required: true},
     currency: {type: String, required: true},
     projectDescripcion: {type: String, required: true},

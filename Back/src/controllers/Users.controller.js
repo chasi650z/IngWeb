@@ -49,6 +49,107 @@ userCrtl.findUserByCredentials = async (req, res) => {
       res.status(500).json({ message: 'Error en el servidor' }); // Error del servidor
     }
   };
+
+  userCrtl.findUserByNameLastname = async (req, res) => {
+    const name = req.query.name;
+    const lastname = req.query.lastname;
+    console.log(name);
+    console.log(lastname);
+    try {
+      if (name && lastname){
+        const user = await User.find({ name, lastname });
+      if (user) {
+        res.json(user); 
+      } else {
+        res.json(false);
+      } 
+    } else if(!name && lastname){
+        const user = await User.find({ lastname });
+        if (user) {
+          res.json(user);  
+        } else {
+          res.json(false);
+        }
+      } else if (name && !lastname){
+        const user = await User.find({ name});
+        if (user) {
+          res.json(user); 
+        } else {
+          res.json(false);
+        }
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error en el servidor' }); // Error del servidor
+    }
+  };
+
+
+  userCrtl.Search = async (req, res) => {
+    const name = req.query.name;
+    const lastname = req.query.lastname;
+    const companyName = req.query.company;
+    console.log(companyName);
+    console.log(lastname);
+    console.log(name);
+
+    try {
+      if(!companyName){
+        console.log(1);
+        if (name && lastname){
+          const user = await User.find({ name, lastname });
+        if (user) {
+          res.json(user); 
+        } else {
+          res.json(false);
+        } 
+      } else if(!name && lastname){
+        console.log(2);
+          const user = await User.find({ lastname });
+          if (user) {
+            res.json(user);  
+          } else {
+            res.json(false);
+          }
+        } else if (name && !lastname){
+          console.log(3);
+          const user = await User.find({ name});
+          if (user) {
+            res.json(user); 
+          } else {
+            res.json(false);
+          }
+        }
+      } else {
+        console.log(4);
+        if (name && lastname ){
+          const user = await User.find({ name, lastname, companyName});
+        if (user) {
+          res.json(user); 
+        } else {
+          res.json(false);
+        } 
+      } else if(!name && lastname){
+          const user = await User.find({ lastname, companyName });
+          if (user) {
+            res.json(user);  
+          } else {
+            res.json(false);
+          }
+        } else if (name && !lastname){
+          const user = await User.find({ name, companyName});
+          if (user) {
+            res.json(user); 
+          } else {
+            res.json(false);
+          }
+        }
+      }
+      
+    } catch (error) {
+      res.status(500).json({ message: 'Error en el servidor' }); // Error del servidor
+    }
+};
+
   
   
 module.exports = userCrtl;
