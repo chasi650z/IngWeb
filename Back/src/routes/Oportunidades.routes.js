@@ -20,4 +20,8 @@ Oprouter.delete('/User/OportunityDelete/:idOp',opCrtl.DeleteOportunidades);
 
 Oprouter.put('/Admin/Oportunity/Evidence/:id/actualizar-calificacion',opCrtl.updateEvidence);
 
+Oprouter.post('/Admin/Oportunity/:id/add-evidence',opCrtl.addEvidence);
+
+Oprouter.get('/Admin/Reporte',opCrtl.getChartData);
+
 module.exports = Oprouter

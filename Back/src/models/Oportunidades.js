@@ -1,12 +1,6 @@
 const {Schema , model} = require ('mongoose')
 
-const StatusEnum = {
-  Registrado: 'Registrado',
-  Fase1: 'Fase 1',
-  Fase2: 'Fase 2',
-  Cierre: 'Cierre',
-  Fallido: 'Fallido'
-};
+const StatusEnum = ['Registrado', 'Fase1', 'Fase2', 'Cierre', 'Fallido'];
 
 const oportunidadSchema = new Schema ({
 
@@ -41,9 +35,10 @@ const oportunidadSchema = new Schema ({
     
     status: {
       type: String,
-      enum: Object.values(StatusEnum),
-      default: StatusEnum.Registrado,
-      required: true},
+      enum: StatusEnum,
+      default: 'Registrado',
+      required: true,
+    },
 
       Evidence: [{
         nombre: {
