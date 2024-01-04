@@ -6,11 +6,12 @@
             <h1>Formulario Oportunidades</h1>
             <form #OportForm = "ngForm" (ngSubmit)="addOport(OportForm, usuarioActual?._id || '')">
 
-              <input type="hidden" name="role" [(ngModel)]="OportunidadesService.selectedOportunidad.IDEmpleado">
+              <input type="hidden" name="IDEmpleado" [(ngModel)]="OportunidadesService.selectedOportunidad.IDEmpleado">
               <input type="hidden" name="_id" [(ngModel)]="OportunidadesService.selectedOportunidad._id">
+              <h2> Company Information </h2>
 
               <div class="form-group mt-2" >
-                <input name="CompanyName" type="text"  class="form-style" placeholder="Company Name" [(ngModel)]="OportunidadesService.selectedOportunidad.companyName">
+                <input name="companyName" type="text"  class="form-style" placeholder="Company Name" [(ngModel)]="OportunidadesService.selectedOportunidad.companyName">
               </div>	
 
               <div class="form-group mt-2">
@@ -33,7 +34,7 @@
               <div class="form-group mt-2">
                 <input  name="postalCode"  type="text"  class="form-style" placeholder="Postal Code" [(ngModel)]="OportunidadesService.selectedOportunidad.postalCode">
               </div>
-
+              <h2> Contact Information </h2>
               <div class="form-group mt-2">
                 <input  name="clientName"  type="text"  class="form-style" placeholder="Client Name" [(ngModel)]="OportunidadesService.selectedOportunidad.clientName">
               </div>
@@ -50,7 +51,39 @@
                 <input  name="phone"  type="text"  class="form-style" placeholder="Phone" [(ngModel)]="OportunidadesService.selectedOportunidad.phone">
               </div>
 
+              <h2> Oportunity Information</h2>
 
+              <div class="form-group mt-2">
+                <input  name="expectedCoseDate"  type="date"  class="form-style" [(ngModel)]="OportunidadesService.selectedOportunidad.expectedCoseDate">
+              </div>
+
+              <input type="hidden" name="CreationDate" [(ngModel)]="OportunidadesService.selectedOportunidad.CreationDate">
+
+              <div class="form-group mt-2">
+                <input  name="currency"  type="text"  class="form-style" placeholder="Currency" [(ngModel)]="OportunidadesService.selectedOportunidad.currency">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="projectDescripcion"  type="text"  class="form-style" placeholder="Descripción del proyecto" [(ngModel)]="OportunidadesService.selectedOportunidad.projectDescripcion">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="numberLicense"  type="number"  class="form-style" placeholder="Número de licencias" [(ngModel)]="OportunidadesService.selectedOportunidad.numberLicense">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="products"  type="text"  class="form-style" placeholder="Producto" [(ngModel)]="OportunidadesService.selectedOportunidad.products">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="price"  type="number"  class="form-style" placeholder="Precio" [(ngModel)]="OportunidadesService.selectedOportunidad.price">
+              </div>
+
+              <div class="form-group mt-2">
+                <input  name="Descuento"  type="number"  class="form-style" placeholder="Descuento" [(ngModel)]="OportunidadesService.selectedOportunidad.Descuento">
+              </div>
+
+              <input type="hidden" name="TotalProfit" [(ngModel)]="OportunidadesService.selectedOportunidad.TotalProfit">
 
 
               <button class="btn mt-4"  >
@@ -58,8 +91,31 @@
               </button>
 
             </form>
+
           </div>
         </div>
+
+        <div *ngIf="mostrarQuery">  
+                <div class="card">
+                    <div class="card-body">
+                      <form #OportForm = "ngForm" (ngSubmit)="AddEvidence(OportForm)">
+                        <h1>Calificar Oportunidad</h1>
+                        <div class="form-group mt-2">
+                            <input  name="nombre"  type="text"  class="form-style" placeholder=" Nombre evidencia " [(ngModel)]="oportunidadInfo.Evidence.nombre">
+                          </div>
+                          <div class="form-group mt-2">
+                            <input  name="descripcion"  type="text"  class="form-style" placeholder="Descripcion" [(ngModel)]="oportunidadInfo.Evidence.descripcion">
+                          </div>
+
+                          <button class="btn mt-4"  >
+                            Save
+                          </button>
+        
+                      </form>
+                    </div>
+                </div>
+            </div>
+
       </div>
       <div class="col-md-8">
         <table class="table table-striped">
@@ -124,7 +180,7 @@
           <p>Total Profit: {{ oportunidadInfo.TotalProfit}}</p>
           <p>Status: {{ oportunidadInfo.status}}</p>
           <h3> Evidence </h3> 
-          <button (click)="AddEvidence(oportunidadInfo)">Mostrar/Ocultar Información</button>
+          <button (click)="SeeEvidence()">Añadir Evidencia</button>
           <div *ngFor="let oports of oportunidadInfo.Evidence">
               <p>----------------------------------------------</p>
               <p>Name: {{ oports.nombre}}</p>

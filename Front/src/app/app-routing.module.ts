@@ -8,6 +8,10 @@ import { ContactoComponent } from './components/home/contacto/contacto.component
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
 import { UsercompanyComponent } from './components/usercompany/usercompany.component';
 import { OportunidadesComponent } from './components/user/oportunidades/oportunidades.component';
+import { ReporteComponent } from './components/user/reporte/reporte.component';
+import { CompanyComponent } from './components/company/company.component';
+import { OportunidadesCComponent } from './components/company/oportunidades-c/oportunidades-c.component';
+import { ReporteCComponent } from './components/company/reporte-c/reporte-c.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -34,6 +38,18 @@ const routes: Routes = [
   },
   {
     path: 'Admin/Oportunidades', component:OportunidadesComponent
+  },
+  {
+    path: 'Admin/Reporte', component:ReporteComponent
+  },
+  {
+    path: 'Company', component:CompanyComponent
+  },
+  {
+    path: 'Company/Oportunidades', component:OportunidadesCComponent
+  },
+  {
+    path: 'Company/Reporte', component:ReporteCComponent
   }
 ];
 

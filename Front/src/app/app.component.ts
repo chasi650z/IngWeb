@@ -12,7 +12,7 @@ export class AppComponent {
 
   isLoginPage(): boolean {
     const url = this.router.url;
-    return url.includes('/Login') || url.includes('/Admin') || url.includes('/User');
+    return url.includes('/Login') || url.includes('/Admin') || url.includes('/User') || url.includes('/Company');
   }
   
 

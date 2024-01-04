@@ -11,7 +11,11 @@ import { ContactoComponent } from './components/home/contacto/contacto.component
 import { PortafolioComponent} from './components/home/portafolio/portafolio.component';
 import { UsercompanyComponent } from './components/usercompany/usercompany.component';
 import { OportunidadesComponent } from './components/user/oportunidades/oportunidades.component';
-
+import { ReporteComponent } from './components/user/reporte/reporte.component';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { CompanyComponent } from './components/company/company.component';
+import { OportunidadesCComponent } from './components/company/oportunidades-c/oportunidades-c.component';
+import { ReporteCComponent } from './components/company/reporte-c/reporte-c.component';
 
 
 @NgModule({
@@ -23,13 +27,19 @@ import { OportunidadesComponent } from './components/user/oportunidades/oportuni
     ContactoComponent,
     PortafolioComponent,
     UsercompanyComponent,
-    OportunidadesComponent
+    OportunidadesComponent,
+    ReporteComponent,
+    CompanyComponent,
+    OportunidadesCComponent,
+    ReporteCComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

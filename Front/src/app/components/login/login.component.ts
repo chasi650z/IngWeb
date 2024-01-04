@@ -3,6 +3,8 @@ import {UserService} from '../../Services/user.service';
 import { Router } from '@angular/router'
 import { user } from 'src/app/Model/user';
 import { AuthService } from '../../Services/auth.service';
+import { CompanyService } from '../../Services/company.service';
+import { Company } from 'src/app/Model/company';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
 
-  constructor(private router: Router, public userservice: UserService, private authService: AuthService){}
+  constructor(private router: Router, public userservice: UserService, private authService: AuthService,public companyservice: CompanyService){}
 
   ngOnInit(): void {
     
@@ -30,11 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   Login() {
+
     this.userservice.searchUser(this.email, this.password).subscribe(
       (response: any) => {
         if (response) {
-          console.log('Usuario registrado:', response);
-
           const usuarioEncontrado: user = {
             _id: response._id,
             name: response.name,
@@ -47,20 +48,32 @@ export class LoginComponent implements OnInit {
             points: response.points,
           };
           this.userservice.actualizarusuarioactual(usuarioEncontrado);
-          console.log(this.userservice.obtenerUsuarioActual());
           if (response.role === 'Admin') {
             this.authService.logueado = true;
             this.router.navigateByUrl('/Admin');
           } else {
             this.router.navigateByUrl('/User');
           }
-        } else {
-          console.log('Usuario no registrado');
         }
-      },
-      (error) => {
-        console.error('Error en la solicitud:', error);
       }
     );
+
+    this.companyservice.searchUser(this.email, this.password).subscribe(
+      (response: any) => {
+        console.log(response)
+        if (response) {
+          const compañia: Company = {
+            _id: response._id,
+            name: response.name,
+            password: response.password,
+            RUC: response.RUC,
+            Identify: response.Identify,
+            Direccion: response.Direccion
+          };
+          this.companyservice.actualizarusuarioactual(compañia);
+          this.router.navigateByUrl('/Company');
+      } 
+    }
+    )
   }
 }

@@ -24,12 +24,7 @@ export class UserService {
     companyName: '',
     points: 0,
   };
-  private usuarioActualSubject: BehaviorSubject<user | null> = new BehaviorSubject<user | null>(null);
-
-  // Observable para que los componentes se suscriban a cambios en el usuario actual
-  usuarioActual$: Observable<user | null> = this.usuarioActualSubject.asObservable();
-
-  // ... otros métodos
+  public usuarioActual: user | null = null;
 
   constructor(private http: HttpClient){}
 
@@ -63,11 +58,11 @@ export class UserService {
   }
 
   obtenerUsuarioActual(): user | null {
-    return this.usuarioActualSubject.value;
+    return this.usuarioActual;
   }
 
   actualizarusuarioactual(user: user) {
-    this.usuarioActualSubject.next(user);
+    this.usuarioActual=user;
   }
 
   Search(name: string, lastname: string) {

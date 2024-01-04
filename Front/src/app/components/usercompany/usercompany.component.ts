@@ -18,6 +18,7 @@ export class UsercompanyComponent {
 
   oportunidadInfo: any;
   mostrarInfo: boolean = false;
+  mostrarQuery: boolean = false;
 
   ngOnInit(): void {
     this.usuarioActual = this.userservice.obtenerUsuarioActual();
@@ -26,7 +27,6 @@ export class UsercompanyComponent {
     }
   }
   
-
   getOports(id: string){
     this.OportunidadesService.getOports(id).subscribe(
       res => {
@@ -48,8 +48,9 @@ export class UsercompanyComponent {
         err => console.log(err)
       )
     } else {
-    this.OportunidadesService.selectedOportunidad.IDEmpleado = this.usuarioActual._id;
-    this.userservice.createUser(form.value).subscribe(
+      this.OportunidadesService.selectedOportunidad.IDEmpleado = this.usuarioActual._id;
+      this.OportunidadesService.selectedOportunidad.TotalProfit = 0;      
+    this.OportunidadesService.createOportunidad(form.value,this.usuarioActual._id).subscribe(
       res => {
         this.getOports(id);
         form.reset();
@@ -93,9 +94,37 @@ export class UsercompanyComponent {
       }
     );
   }
-  AddEvidence(oport: any){
-    
+
+  AddEvidence(form: NgForm) {
+    if (this.oportunidadInfo && this.oportunidadInfo._id) {
+      const nuevaEvidencia = {
+        nombre: form.value.nombre,
+        descripcion: form.value.descripcion,
+        note: 0, // No se ingresa nota
+        feedback: "Sin feedback", // No se ingresa feedback
+        fechaCreacion: "", // No se ingresa fechaCreacion
+      };
+
+      this.OportunidadesService.addEvidence(this.oportunidadInfo._id, nuevaEvidencia).subscribe(
+        (res: any) => {
+          // La evidencia se agregó con éxito
+          console.log('Evidencia añadida con éxito:', res);
+          // Puedes realizar otras acciones, como actualizar la lista de evidencias
+          // o mostrar un mensaje de éxito al usuario.
+        },
+        (err: any) => {
+          // Manejar errores, mostrar mensajes de error, etc.
+          console.error('Error al añadir evidencia:', err);
+        }
+      );
+      this.mostrarInfo = !this.mostrarInfo;
+      this.mostrarQuery = !this.mostrarQuery;
+    }
   }
 
+  SeeEvidence(){
+    this.mostrarQuery = true;
+  }
+  
 }
 

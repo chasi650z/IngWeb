@@ -46,6 +46,7 @@ export class OportunidadesService {
   constructor(private http: HttpClient) { }
 
   createOportunidad(oport: Oportunidad, _id:string){
+    oport.IDEmpleado=_id;
     const AddOport = `${this.URL_API}/User/Oportunities`
     return this.http.post(AddOport, oport)
   }
@@ -85,7 +86,14 @@ export class OportunidadesService {
     return this.http.put(url, calification);
   }
 
-  
+  addEvidence(oportunidadId: string, evidencia: any) {
+    const url = `${this.URL_API}/Admin/Oportunity/${oportunidadId}/add-evidence`;
+    return this.http.post(url, evidencia);
+  }
+
+  grafica(){
+    const url = `${this.URL_API}/Admin/Oportunity/add-evidence`;
+  }
 
 
 
