@@ -238,10 +238,13 @@ companyCrtl.Profits = async (req, res) => {
 
   companyCrtl.ProfitsDate = async (req, res) => {
     try {
-      const NameCP = req.params.company;
-      const startDate = new Date(req.body.startDate);
-      const endDate = new Date(req.body.endDate);
-  
+        const NameCP = req.params.company;
+        const startDate = new Date(req.params.startDate);
+        const endDate = new Date(req.params.endDate);
+
+        if (isNaN(startDate) || isNaN(endDate)) {
+            return res.status(400).json({ message: 'Las fechas proporcionadas no son válidas.' });
+          }
       // Obtener todos los usuarios de la empresa
       const users = await User.find({ companyName: NameCP });
       const Employees = {};

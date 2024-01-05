@@ -20,6 +20,6 @@ CProuter.get('/:company/UserNotesOport/:id',CPCrtl.UserNotas);
 CProuter.get('/:company/TotalProfit',CPCrtl.ProfitsTotal);
 
 CProuter.get('/:company/Profits',CPCrtl.Profits);
-CProuter.get('/:company/ProfitsDate',CPCrtl.ProfitsDate);
+CProuter.get('/:company/ProfitsDate/:startDate/:endDate',CPCrtl.ProfitsDate);
 
 module.exports = CProuter
