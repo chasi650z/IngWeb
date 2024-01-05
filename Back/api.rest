@@ -143,7 +143,9 @@ Content-Type: application/json
 
 GET http://localhost:4000/Admin/Reporte
 
+###
 
+GET http://localhost:4000/Admin/ReporteAverage
 ###
 POST http://localhost:4000/Company/AddUser
 Content-Type: application/json

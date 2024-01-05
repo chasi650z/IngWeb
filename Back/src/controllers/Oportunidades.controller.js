@@ -184,4 +184,90 @@ opCrtl.getOportunidadesPorEstado = async (req, res) => {
     }
   };
   
+  opCrtl.ProfitsTotal = async (req, res) => {
+    try {
+        // Obtener las empresas predefinidas
+        const companies = ["GMS", "XPC", "TAURUSTECH"];
+
+        let result = [];
+
+        // Utiliza Promise.all para esperar todas las consultas asíncronas
+        await Promise.all(
+            companies.map(async (companyName) => {
+                // Encuentra usuarios para cada empresa
+                const users = await User.find({ companyName });
+
+                let totalProfit = 0;
+
+                // Sumar el profit de cada oportunidad de todos los empleados de la empresa
+                for (const user of users) {
+                    const iduser = user._id;
+                    // Encuentra oportunidades para el ID de cada usuario
+                    const oportunidadesList = await Oports.find({ IDEmpleado: iduser });
+
+                    oportunidadesList.forEach((oportunidad) => {
+                        totalProfit += oportunidad.TotalProfit || 0;
+                    });
+                }
+
+                // Agregar el resultado al array de resultados
+                result.push({ companyName, totalProfit });
+            })
+        );
+
+        // Devolver el resultado con el nombre de la empresa y el profit total
+        res.json(result);
+    } catch (error) {
+        // Manejar errores, por ejemplo, imprimirlos en la consola
+        console.error('Error al obtener las ganancias:', error);
+        // Enviar una respuesta de error al cliente
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+opCrtl.AverageNotesPerEmployee = async (req, res) => {
+  try {
+      const companies = ["GMS", "XPC", "TAURUSTECH"];
+      const result = [];
+
+      for (const companyName of companies) {
+          const users = await User.find({ companyName });
+
+          const totalEmployees = users.length;
+          let totalNotes = 0;
+
+          for (const user of users) {
+              const iduser = user._id;
+
+              const opportunitiesUser = await Oports.find({ IDEmpleado: iduser });
+
+              const opportunitiesWithNotes = opportunitiesUser.filter(opportunity => opportunity.Evidence.some(evidence => 'note' in evidence));
+
+              const notes = opportunitiesWithNotes.flatMap(opportunity => opportunity.Evidence.map(evidence => evidence.note || 0));
+              const average = notes.length > 0 ? notes.reduce((a, b) => a + b) / notes.length : 0;
+
+              totalNotes += average;
+
+              const employee = await User.findById(iduser);
+
+              if (employee) {
+                  const employeeName = `${employee.name} ${employee.lastname}`;
+              }
+          }
+
+          const averageNotes = totalEmployees > 0 ? totalNotes / totalEmployees : 0;
+
+          result.push({
+              companyName,
+              averageNotes,
+          });
+      }
+
+      res.json(result);
+  } catch (error) {
+      console.error('Error:', error.message);
+      res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
   module.exports = opCrtl;

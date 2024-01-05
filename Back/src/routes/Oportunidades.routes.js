@@ -22,6 +22,7 @@ Oprouter.put('/Admin/Oportunity/Evidence/:id/actualizar-calificacion',opCrtl.upd
 
 Oprouter.post('/Admin/Oportunity/:id/add-evidence',opCrtl.addEvidence);
 
-Oprouter.get('/Admin/Reporte',opCrtl.getChartData);
+Oprouter.get('/Admin/Reporte',opCrtl.ProfitsTotal);
+Oprouter.get('/Admin/ReporteAverage',opCrtl.AverageNotesPerEmployee);
 
 module.exports = Oprouter
