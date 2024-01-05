@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { user } from '../Model/user';
 import { Oportunidad } from '../Model/oportunidad';
 import { Company } from '../Model/company';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -91,6 +92,13 @@ export class CompanyService {
     const RUser = `${this.URL_API}/${name}/PromOport`;
     return (this.http.get(RUser));
   }
+
+  Search(name: string, creacion: string, cierre: string) {
+    const searchUsers = `${this.URL_API}/${name}/ProfitsDate/${creacion}/${cierre}`;
+    return this.http.get(searchUsers);
+  }
+  
+  
 
   
 

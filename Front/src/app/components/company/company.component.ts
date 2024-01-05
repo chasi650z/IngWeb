@@ -20,6 +20,11 @@ export class CompanyComponent implements OnInit {
   reporteGeneral : any[] = [];
   totalProfit: number = 0;
   Seereport:boolean=false;
+  profits:any[]=[]
+  
+
+  creacion:string= '';
+  cierre:string= '';
 
   ngOnInit(): void {
     this.getUsers();
@@ -100,5 +105,25 @@ export class CompanyComponent implements OnInit {
       }
     );
   }
+
+
+  search(creacion: string, cierre: string) {
+    this.companyservice.Search(this.name,creacion, cierre).subscribe(
+      (res) => {
+        this.profits=Object.values(res);
+        console.log(res);
+      },
+      (error) => {
+        console.error('Error en la solicitud de búsqueda:', error);
+      }
+    );
+  }
+  
+
+  Cancel(){
+    this.getUsers();
+  }
+
+
 }
 
