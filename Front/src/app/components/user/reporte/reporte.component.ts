@@ -12,6 +12,11 @@ import {
   ApexTitleSubtitle,
   ApexLegend
 } from "ng-apexcharts";
+import { Oportunidad } from 'src/app/Model/oportunidad';
+import { OportunidadesService } from 'src/app/Services/oportunidades.service';
+import { user } from 'src/app/Model/user';
+import { UserService } from 'src/app/Services/user.service';
+import { CompanyService } from 'src/app/Services/company.service';
 
 import { series } from './datos-ejemplo';
 
@@ -28,15 +33,6 @@ export type ChartOptions = {
   subtitle: ApexTitleSubtitle;
 };
 
-export type ChartOptions2 = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  fill: ApexFill;
-  legend: ApexLegend;
-  xaxis: ApexXAxis;
-  plotOptions: ApexPlotOptions;
-};
-
 @Component({
   selector: 'app-reporte',
   templateUrl: './reporte.component.html',
@@ -46,13 +42,16 @@ export type ChartOptions2 = {
 export class ReporteComponent implements OnInit {
 
   chartOptions: ChartOptions = {} as ChartOptions;
-  chartOptions2: ChartOptions2 = {} as ChartOptions2;
 
-  constructor(){
+  constructor(public userservice: UserService, public companyservice: CompanyService,public OportunidadesService : OportunidadesService){}
 
-  }
-  
+ informeGeneral: any[] = [];
+  informeNotas: any[] = [];
+  totalProfit: number = 0;
+  Seereport:boolean=false;
+
   ngOnInit(){
+
     this.chartOptions = {
       series: [
         {
@@ -93,155 +92,34 @@ export class ReporteComponent implements OnInit {
         horizontalAlign: "left"
       }
     };
+  }
 
-    this.chartOptions2 = {
-      series: [
-        {
-          name: "Bob",
-          data: [
-            {
-              x: "Design",
-              y: [
-                new Date("2019-03-05").getTime(),
-                new Date("2019-03-08").getTime()
-              ]
-            },
-            {
-              x: "Code",
-              y: [
-                new Date("2019-03-02").getTime(),
-                new Date("2019-03-05").getTime()
-              ]
-            },
-            {
-              x: "Code",
-              y: [
-                new Date("2019-03-05").getTime(),
-                new Date("2019-03-07").getTime()
-              ]
-            },
-            {
-              x: "Test",
-              y: [
-                new Date("2019-03-03").getTime(),
-                new Date("2019-03-09").getTime()
-              ]
-            },
-            {
-              x: "Test",
-              y: [
-                new Date("2019-03-08").getTime(),
-                new Date("2019-03-11").getTime()
-              ]
-            },
-            {
-              x: "Validation",
-              y: [
-                new Date("2019-03-11").getTime(),
-                new Date("2019-03-16").getTime()
-              ]
-            },
-            {
-              x: "Design",
-              y: [
-                new Date("2019-03-01").getTime(),
-                new Date("2019-03-03").getTime()
-              ]
-            }
-          ]
-        },
-        {
-          name: "Joe",
-          data: [
-            {
-              x: "Design",
-              y: [
-                new Date("2019-03-02").getTime(),
-                new Date("2019-03-05").getTime()
-              ]
-            },
-            {
-              x: "Test",
-              y: [
-                new Date("2019-03-06").getTime(),
-                new Date("2019-03-16").getTime()
-              ]
-            },
-            {
-              x: "Code",
-              y: [
-                new Date("2019-03-03").getTime(),
-                new Date("2019-03-07").getTime()
-              ]
-            },
-            {
-              x: "Deployment",
-              y: [
-                new Date("2019-03-20").getTime(),
-                new Date("2019-03-22").getTime()
-              ]
-            },
-            {
-              x: "Design",
-              y: [
-                new Date("2019-03-10").getTime(),
-                new Date("2019-03-16").getTime()
-              ]
-            }
-          ]
-        },
-        {
-          name: "Dan",
-          data: [
-            {
-              x: "Code",
-              y: [
-                new Date("2019-03-10").getTime(),
-                new Date("2019-03-17").getTime()
-              ]
-            },
-            {
-              x: "Validation",
-              y: [
-                new Date("2019-03-05").getTime(),
-                new Date("2019-03-09").getTime()
-              ]
-            }
-          ]
-        }
-      ],
-      chart: {
-        height: 450,
-        type: "rangeBar"
+  generarReporte() {
+    this.OportunidadesService.Reporte().subscribe(
+      (data: any) => {
+        // Almacenar el informe general
+        this.informeGeneral = data;
       },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          barHeight: "80%"
-        }
-      },
-      xaxis: {
-        type: "datetime"
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          type: "vertical",
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [50, 0, 100, 100]
-        }
-      },
-      legend: {
-        position: "top",
-        horizontalAlign: "left"
+      (error) => {
+        console.error('Error al generar el informe general:', error);
       }
-    };
+    );
+
+    this.OportunidadesService.ReporteAverage().subscribe(
+      (data: any) => {
+        // Almacenar el informe de notas
+        this.informeNotas = data;
+        // Almacenar el TotalProfit
+        this.totalProfit = this.informeNotas.reduce((total, item) => total + item.totalProfit, 0);
+        // Generar el informe HTML aquí
+      },
+      (error) => {
+        console.error('Error al obtener el informe de notas:', error);
+      }
+    );
+    console.log(this.informeGeneral)
+    console.log(this.informeNotas)
   }
-  }
+}
   
 

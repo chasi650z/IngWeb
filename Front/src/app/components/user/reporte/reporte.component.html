@@ -1,26 +1,55 @@
-<p>reporte works!</p>
 <div id="chart">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [stroke]="chartOptions.stroke"
-      [dataLabels]="chartOptions.dataLabels"
-      [yaxis]="chartOptions.yaxis"
-      [labels]="chartOptions.labels"
-      [legend]="chartOptions.legend"
-      [title]="chartOptions.title"
-      [subtitle]="chartOptions.subtitle"
-    ></apx-chart>
-  </div>
-  <div id="chart">
-    <apx-chart
-      [series]="chartOptions2.series"
-      [chart]="chartOptions2.chart"
-      [fill]="chartOptions2.fill"
-      [legend]="chartOptions2.legend"
-      [plotOptions]="chartOptions2.plotOptions"
-      [xaxis]="chartOptions2.xaxis"
-    ></apx-chart>
-  </div>
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [stroke]="chartOptions.stroke"
+    [dataLabels]="chartOptions.dataLabels"
+    [yaxis]="chartOptions.yaxis"
+    [labels]="chartOptions.labels"
+    [legend]="chartOptions.legend"
+    [title]="chartOptions.title"
+    [subtitle]="chartOptions.subtitle"
+  ></apx-chart>
+</div>
+
+<button (click)="generarReporte()" > Generar Reporte </button>
+
+  <h2>Total profit: {{ totalProfit | currency }}</h2>
+
+  <h2>Informe de notas promedio de los empleados</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre de la Empresa</th>
+        <th>Notas Promedio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let informe of informeNotas">
+        <td>{{ informe?.companyName }}</td>
+        <td>{{ informe?.averageNotes | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Informe General</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre de la Empresa</th>
+        <th>Total Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let informe of informeGeneral">
+        <td>{{ informe?.companyName }}</td>
+        <td>{{ informe?.totalProfit | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
 

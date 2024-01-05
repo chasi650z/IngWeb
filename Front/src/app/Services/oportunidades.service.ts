@@ -91,10 +91,15 @@ export class OportunidadesService {
     return this.http.post(url, evidencia);
   }
 
-  grafica(){
-    const url = `${this.URL_API}/Admin/Oportunity/add-evidence`;
+  Reporte(){
+    const url = `${this.URL_API}/Admin/Reporte`;
+    return this.http.get(url);
   }
 
+  ReporteAverage(){
+    const url = `${this.URL_API}/Admin/ReporteAverage`;
+    return this.http.get(url);
+  }
 
 
 }

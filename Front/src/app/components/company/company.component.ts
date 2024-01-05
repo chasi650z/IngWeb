@@ -17,6 +17,9 @@ export class CompanyComponent implements OnInit {
   constructor(public userservice: UserService, public companyservice: CompanyService,public OportunidadesService : OportunidadesService) {}
 
   name = this.companyservice.compactual.name;
+  reporteGeneral : any[] = [];
+  totalProfit: number = 0;
+  Seereport:boolean=false;
 
   ngOnInit(): void {
     this.getUsers();
@@ -74,8 +77,28 @@ export class CompanyComponent implements OnInit {
     this.userservice.selectedUser = user;
   }
 
-  generarReporte(){
-    
+  generarReporte() {
+    this.Seereport = true;
+
+    this.companyservice.generarReporte(this.name).subscribe(
+      (data: any) => {
+        // Guardar el reporteGeneral
+        this.reporteGeneral = Object.values(data);
+      },
+      (error) => {
+        console.error('Error al generar el reporte:', error);
+      }
+    );
+
+    this.companyservice.generarReporteTotalProfit(this.name).subscribe(
+      (data: any) => {
+        // Guardar el TotalProfit
+        this.totalProfit = data.totalProfit;
+      },
+      (error) => {
+        console.error('Error al obtener el TotalProfit:', error);
+      }
+    );
   }
 }
 

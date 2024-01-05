@@ -1,4 +1,4 @@
-<body>
+
     <header >
       <div class="interior">
           <nav class="navegacion">
@@ -6,14 +6,30 @@
         </nav>
       </div>
       </header>
-      <router-outlet></router-outlet>
         <div class="col-md-4">
           <div class="card">
             <div class="card-body">
-
               <button (click)="generarReporte()" > Generar Reporte </button>
-
-            </div>
+              
+              <div *ngIf="Seereport">
+                <h2>Total profit: {{ totalProfit | currency }}</h2>
+      
+                <h2>Promedio de notas de los empleados</h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Nombre del Empleado</th>
+                      <th>Promedio de Notas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let empleado of reporteGeneral">
+                      <td>{{ empleado?.nombreEmpleado }}</td>
+                      <td>{{ empleado?.promedio | number:'1.2-2' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
           </div>
         </div>
         <div class="col-md-8">
@@ -71,5 +87,4 @@
           </table>
 
         </div>
-  </body>
   
