@@ -150,59 +150,48 @@ companyCrtl.obtenerNotasDeOportunidades = async (req, res) => {
 
 
 
-  companyCrtl.promedioNotasEmpleado = async (req, res) => {
+companyCrtl.promedioNotasEmpleado = async (req, res) => {
     try {
-        // Obtener todas las oportunidades
         const NameCP = req.params.company;
         const users = await User.find({ companyName: NameCP });
-        
-        // Utiliza Promise.all para esperar todas las consultas asíncronas
-        const oports = await Promise.all(users.map(async (user) => {
-            const iduser = user._id;
-            // Encuentra oportunidades para el ID de cada usuario
-            return await Oportunidad.find({ IDEmpleado: iduser });
-        }));
 
-        // Inicializar un objeto para almacenar el promedio de notas por empleado
         const promedioNotasPorEmpleado = {};
 
-        // Recorrer todas las oportunidades
-        for (const oportunidadList of oports) {
-            // Verificar si oportunidadList es un array y tiene elementos
-            if (Array.isArray(oportunidadList) && oportunidadList.length > 0) {
-                // Obtener el ID de la oportunidad y del empleado
-                const empleadoId = oportunidadList[0].IDEmpleado;
+        // Recorrer todos los usuarios
+        for (const user of users) {
+            const iduser = user._id;
 
-                // Calcular el promedio de notas para cada oportunidad
-                const notas = oportunidadList[0].Evidence.map(evidencia => evidencia.note || 0);
-                const promedio = notas.length > 0 ? notas.reduce((a, b) => a + b) / notas.length : null;
+            // Encuentra todas las oportunidades para el ID de cada usuario
+            const oportunidadesUsuario = await Oportunidad.find({ IDEmpleado: iduser });
 
-                // Consultar el nombre del empleado desde la colección de empleados
-                const empleado = await User.findById(empleadoId);
+            // Filtrar las oportunidades que tienen evidencias con notas
+            const oportunidadesConNotas = oportunidadesUsuario.filter(oportunidad => oportunidad.Evidence.some(evidencia => 'note' in evidencia));
 
-                // Agregar la información al objeto de promedio de notas por empleado
-                if (empleado) {
-                    const nombreEmpleado = `${empleado.name} ${empleado.lastname}`;
+            // Calcular el promedio de notas para todas las oportunidades con notas
+            const notas = oportunidadesConNotas.flatMap(oportunidad => oportunidad.Evidence.map(evidencia => evidencia.note || 0));
+            const promedio = notas.length > 0 ? notas.reduce((a, b) => a + b) / notas.length : null;
 
-                    // Agregar la información al objeto de promedio de notas por empleado
-                    promedioNotasPorEmpleado[empleadoId] = {
-                        nombreEmpleado,
-                        promedio // Promedio general
-                    };
-                }
+            // Consultar el nombre del empleado desde la colección de empleados
+            const empleado = await User.findById(iduser);
+
+            // Agregar la información al objeto de promedio de notas por empleado
+            if (empleado) {
+                const nombreEmpleado = `${empleado.name} ${empleado.lastname}`;
+
+                promedioNotasPorEmpleado[iduser] = {
+                    nombreEmpleado,
+                    promedio // Promedio general
+                };
             }
         }
-        
-        // Devolver el objeto de promedio de notas por empleado
+
         res.json(promedioNotasPorEmpleado);
     } catch (error) {
-        // Manejar errores, por ejemplo, imprimirlos en la consola
-        console.error('Error al obtener promedio de notas por empleado:', error);
-
-        // Enviar una respuesta de error al cliente
+        console.error('Error:', error.message);
         res.status(500).json({ message: 'Error en el servidor' });
     }
 };
+
 
 companyCrtl.Profits = async (req, res) => {
     try {
@@ -246,7 +235,6 @@ companyCrtl.Profits = async (req, res) => {
       res.status(500).json({ message: 'Error en el servidor' });
     }
   };
-  
 
   companyCrtl.ProfitsDate = async (req, res) => {
     try {
@@ -287,5 +275,82 @@ companyCrtl.Profits = async (req, res) => {
       res.status(500).json({ message: 'Error en el servidor' });
     }
   };
-  
+
+  companyCrtl.UserNotas = async (req, res) => {
+    try {
+        const companyId = req.params.company;
+        const userId = req.params.id;
+
+        // Encuentra oportunidades para el ID de usuario específico
+        const oports = await Oportunidad.find({ IDEmpleado: userId });
+
+        // Inicializar un arreglo para almacenar las notas
+        const notas = [];
+
+        // Recorrer todas las oportunidades del usuario
+        for (const oportunidad of oports) {
+            // Obtener el ID de la oportunidad y del empleado
+            const oportunidadId = oportunidad._id;
+            const empleadoId = oportunidad.IDEmpleado;
+
+            // Consultar el nombre del empleado desde la colección de empleados
+            const empleado = await User.findById(empleadoId);
+
+            // Recorrer las evidencias y obtener las notas
+            for (const evidencia of oportunidad.Evidence) {
+                // Verificar si la evidencia tiene la propiedad 'note'
+                if ('note' in evidencia) {
+                    // Agregar la información al arreglo de notas
+                    notas.push({
+                        oportunidadId,
+                        empleadoId,
+                        nombreEmpleado: `${empleado.name} ${empleado.lastname}`,
+                        nota: evidencia.note
+                    });
+                }
+            }
+        }
+
+        res.json(notas);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
+
+companyCrtl.ProfitsTotal = async (req, res) => {
+    try {
+        // Obtener todas las oportunidades
+        const NameCP = req.params.company;
+        const users = await User.find({ companyName: NameCP });
+
+        let totalProfit = 0;
+
+        // Utiliza Promise.all para esperar todas las consultas asíncronas
+        const oports = await Promise.all(
+            users.map(async (user) => {
+                const iduser = user._id;
+                // Encuentra oportunidades para el ID de cada usuario
+                const oportunidadesList = await Oportunidad.find({ IDEmpleado: iduser });
+
+                // Sumar el profit de cada oportunidad del empleado
+                oportunidadesList.forEach((oportunidad) => {
+                    totalProfit += oportunidad.TotalProfit || 0;
+                });
+
+                return oportunidadesList;
+            })
+        );
+
+        // Devolver el profit total de la empresa
+        res.json({ totalProfit });
+    } catch (error) {
+        // Manejar errores, por ejemplo, imprimirlos en la consola
+        console.error('Error al obtener las ganancias:', error);
+        // Enviar una respuesta de error al cliente
+        res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+
 module.exports = companyCrtl;
