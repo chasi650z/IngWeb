@@ -12,6 +12,8 @@ export class CompanyService {
 
   users : user[] = [];
 
+  oportunidades : Oportunidad[] = [];
+
   compactual: Company = {
 
     _id: '',
@@ -68,6 +70,26 @@ export class CompanyService {
 
   obtenerUsuarioActual() {
     return this.compactual;
+  }
+
+  generarReporte(name:string) {
+    const RUser = `${this.URL_API}/${name}/PromOport`;
+    return (this.http.get(RUser));
+  }
+
+  generarReporteDetalle(name:string,id:string) {
+    const RUser = `${this.URL_API}/${name}/UserNotesOport/${id}`;
+    return (this.http.get(RUser));
+  }
+  
+  generarReporteTotalProfit(name:string) {
+    const RUser = `${this.URL_API}/${name}/TotalProfit`;
+    return (this.http.get(RUser));
+  }
+
+  generarReporteProfit(name:string) {
+    const RUser = `${this.URL_API}/${name}/PromOport`;
+    return (this.http.get(RUser));
   }
 
 }

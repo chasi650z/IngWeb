@@ -59,8 +59,8 @@ export class LoginComponent implements OnInit {
     );
 
     this.companyservice.searchUser(this.email, this.password).subscribe(
-      (response: any) => {
-        console.log(response)
+      (response: Company) => {
+        console.log(response);
         if (response) {
           const compañia: Company = {
             _id: response._id,
@@ -68,12 +68,15 @@ export class LoginComponent implements OnInit {
             password: response.password,
             RUC: response.RUC,
             Identify: response.Identify,
-            Direccion: response.Direccion
+            Direccion: response.Direccion,
           };
           this.companyservice.actualizarusuarioactual(compañia);
           this.router.navigateByUrl('/Company');
-      } 
-    }
-    )
+        }
+      },
+      (error) => {
+        console.error('Error al buscar la compañía:', error);
+      }
+    );
   }
 }

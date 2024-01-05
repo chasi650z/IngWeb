@@ -61,7 +61,7 @@ export class OportunidadesService {
     return this.http.get<Oportunidad[]>(Oport);
   }
 
-  deleteUser(id:string, _id: string,){
+  deleteUser(_id: string,){
     const deleteUrl = `${this.URL_API}/User/OportunityDelete/${_id}`;
     return this.http.delete(deleteUrl);
   }

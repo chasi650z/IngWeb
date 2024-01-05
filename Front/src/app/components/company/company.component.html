@@ -3,11 +3,6 @@
       <div class="interior">
           <nav class="navegacion">
               <img src="https://static.wixstatic.com/media/e66e46_e148c4dd72dd4627a05b9890d47e0869~mv2.png/v1/crop/x_11,y_0,w_2332,h_552/fill/w_275,h_65,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Logovialynk_color.png">
-          <ul>
-            <li><a href="/Company">Usuarios</a></li>
-            <li><a href="/Company/Oportunidades">Oportunidades</a></li>
-            <li class="Submenu"><a href="/Admin/Reporte">Reporte</a> </li>
-          </ul>
         </nav>
       </div>
       </header>
@@ -16,10 +11,13 @@
           <div class="card">
             <div class="card-body">
 
+              <button (click)="generarReporte()" > Generar Reporte </button>
+
             </div>
           </div>
         </div>
         <div class="col-md-8">
+          <h1>Tabla de oportunidades de Usuarios de la Empresa </h1>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -36,9 +34,6 @@
                 <td>{{user.email}}</td>
                 <td>{{user.country}}</td>
                 <td>
-                  <button class="btn btn-secondary btn-sm" (click)="editUser(user)"> 
-                    <i class="material-icons"> edit </i>
-                     </button>
                   <button class="btn btn-danger btn-sm" (click)="user._id && deleteUser(user._id)" >
                     <i class="material-icons"> delete </i>
                   </button>
@@ -46,6 +41,35 @@
               </tr>
             </tbody>
           </table>
+          <h1>Tabla de oportunidades de la Empresa </h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>CompanyName</th>
+                <th>Client Name</th>
+                <th>Client Lastname</th>
+                <th>Creation Date</th>
+                <th>Expected Cose Date</th>
+                <th>Total Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let oports of companyservice.oportunidades">
+                <td>{{oports.companyName}}</td>
+              <td>{{oports.clientName}}</td>
+              <td>{{oports.clientLastName}}</td>
+              <td>{{oports.CreationDate}}</td>
+              <td>{{oports.expectedCoseDate}}</td>
+              <td>{{oports.TotalProfit}}</td>
+              <td>
+                  <button class="btn btn-danger btn-sm" (click)="oports._id && deleteUser(oports._id)" >
+                    <i class="material-icons"> delete </i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
   </body>
   

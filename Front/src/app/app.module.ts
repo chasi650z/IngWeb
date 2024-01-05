@@ -14,8 +14,6 @@ import { OportunidadesComponent } from './components/user/oportunidades/oportuni
 import { ReporteComponent } from './components/user/reporte/reporte.component';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { CompanyComponent } from './components/company/company.component';
-import { OportunidadesCComponent } from './components/company/oportunidades-c/oportunidades-c.component';
-import { ReporteCComponent } from './components/company/reporte-c/reporte-c.component';
 
 
 @NgModule({
@@ -29,9 +27,7 @@ import { ReporteCComponent } from './components/company/reporte-c/reporte-c.comp
     UsercompanyComponent,
     OportunidadesComponent,
     ReporteComponent,
-    CompanyComponent,
-    OportunidadesCComponent,
-    ReporteCComponent,
+    CompanyComponent
 
   ],
   imports: [

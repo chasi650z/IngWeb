@@ -10,8 +10,6 @@ import { UsercompanyComponent } from './components/usercompany/usercompany.compo
 import { OportunidadesComponent } from './components/user/oportunidades/oportunidades.component';
 import { ReporteComponent } from './components/user/reporte/reporte.component';
 import { CompanyComponent } from './components/company/company.component';
-import { OportunidadesCComponent } from './components/company/oportunidades-c/oportunidades-c.component';
-import { ReporteCComponent } from './components/company/reporte-c/reporte-c.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -45,12 +43,7 @@ const routes: Routes = [
   {
     path: 'Company', component:CompanyComponent
   },
-  {
-    path: 'Company/Oportunidades', component:OportunidadesCComponent
-  },
-  {
-    path: 'Company/Reporte', component:ReporteCComponent
-  }
+
 ];
 
 @NgModule({
